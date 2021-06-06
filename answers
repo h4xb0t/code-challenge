@@ -1,0 +1,44 @@
+## The problem, given a list of IPs, determine how many times each IP appears ##
+
+
+## SIMPLE BASH ##
+
+## Given raw data - sort the data then run uniq with the count flag 
+## (  -c, --couprefix lines by the number of occurrences)
+## This is what I was trying to think through in the interview, I just forgot about the -c flag oof
+
+sort ip_list > ip_list_sorted
+uniq -c ip_list
+
+
+## Print the data into a more readable format - sorting by the number of times the IP appears to find your worst offenders
+
+uniq -c ip_list_sorted | sort >> ip_list_top_offenders
+
+# but this could be a bit more readable, so we can awk/print and add a delimeter
+
+cat ip_list_top_offenders | awk '{print $1": "$2}' > ip_list_top_offenders
+
+# we could also sort this dataset by IP instead of by count, a bit harder to do since sort only takes into account the first digit
+# the sort function does have a field separator to assist, a numeric sort, as well as the -k option to sort by column
+# combining these three we can
+# Add a field separator, sort each separator column one after another by prodiving a key which is that columns value, then applying numerical sort
+# (  -t, --field-separator=SEP  use SEP instead of non-blank to blank transition)
+# (  -n, --numeric-sort          compare according to string numerical value)
+# (  -k, --key=KEYDEF          sort via a key; KEYDEF gives location and type)
+
+# now we have a list sorted by IP instead, we can also adjust our print statement to move the IP to the left hand side for clarity
+
+# we could combine these pipes but for clarity I wrote into two lines as it gets heavy
+
+sort -t . -k 1,1n -k 2,2n -k 3,3n -k 4,4n ip_list >> ip_list_sortedbyip
+ 
+cat ip_list_sortedbyip | uniq -c ip_list_sortedbyip|  awk '{print $2": "$1}'
+
+# combined
+sort -t . -k 1,1n -k 2,2n -k 3,3n -k 4,4n ip_list | uniq -c ip_list_sortedbyip|  awk '{print $2": "$1}' > offender_counts_by_ip
+
+
+
+
+
