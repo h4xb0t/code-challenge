@@ -35,8 +35,8 @@ sort -t . -k 1,1n -k 2,2n -k 3,3n -k 4,4n ip_list >> ip_list_sortedbyip
  
 cat ip_list_sortedbyip | uniq -c ip_list_sortedbyip|  awk '{print $2": "$1}'
 
-# combined
-sort -t . -k 1,1n -k 2,2n -k 3,3n -k 4,4n ip_list | uniq -c ip_list_sortedbyip|  awk '{print $2": "$1}' > offender_counts_by_ip
+# combined with fancy looking output
+sort -t . -k 1,1n -k 2,2n -k 3,3n -k 4,4n ip_list | uniq -c ip_list_sortedbyip|  awk '{print $2" - IP appears "$1" time(s)"}'  > offender_counts_by_ip
 
 
 
