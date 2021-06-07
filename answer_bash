@@ -4,7 +4,7 @@
 ## SIMPLE BASH ##
 
 ## Given raw data - sort the data then run uniq with the count flag 
-## (  -c, --couprefix lines by the number of occurrences)
+## (  -c, --prefix lines by the number of occurrences)
 ## This is what I was trying to think through in the interview, I just forgot about the -c flag oof
 
 sort ip_list > ip_list_sorted
